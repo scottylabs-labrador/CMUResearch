@@ -9,6 +9,7 @@ Webapp which consolidates research opportunities across every Carnegie Mellon de
 | `apps/web` | React, TypeScript, Tailwind and Vite frontend |
 | `apps/api` | Express, auth, MongoDB routes, and `dbschemas/` |
 | `apps/scrapers` | Python collectors, CSV transforms, and database writers |
+| `docs` | Project documentation, including the [frontend design guide](docs/frontend-design.md) |
 
 Web and API use npm workspaces with one root `package-lock.json`. Python uses a separate virtual environment. No task runner or CI service is required.
 
