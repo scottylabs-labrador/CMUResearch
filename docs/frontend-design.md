@@ -1,24 +1,14 @@
 # Frontend design
 
-How the CMU Research web app looks and behaves, and why. Read this before adding a page, a component or a colour.
+How the CMU Research frontend looks and behaves, and why. Read this before adding a page, a component or a colour.
 
 - **Code:** `apps/web` (React, Vite, Tailwind)
 - **Tokens:** `apps/web/src/index.css` (`:root`) and `apps/web/tailwind.config.js`
 - **Shared components:** `apps/web/src/components/ui/`
-- **Visual direction:** @bryan628006's designs, implemented in [#43](https://github.com/scottylabs-labrador/ResearchStarter/pull/43)
 
-**Keep this doc current.** A PR that adds or changes a token, a shared component or a page pattern updates the matching section here. A PR that reverses a decision adds an entry to the [decision log](#10-decision-log).
+**Keep this doc current. Any design changes should be updated here!**
 
-## 1. Principles
-
-1. **A quiet canvas with one accent.** Near-white surfaces, hairline borders and grey text carry the page. The steel-blue accent marks only what you can act on or where you are: primary buttons, the active nav tab, focus rings.
-2. **Mono for data, sans for prose.** Dates, semesters, counts, Andrew IDs, emails and section labels are set in Geist Mono. Everything people read is Geist.
-3. **Show each fact once.** If the Details table lists the compensation, the header doesn't repeat it.
-4. **Whole pixels on a 4px grid.** Sizes, spacing and radii are whole pixels, on a 4px grid with 2px half-steps.
-5. **Align what people see.** Icons and text line up on their visible ink, not on their bounding boxes.
-6. **Accessible by default.** Text meets WCAG AA contrast, everything works from the keyboard, and motion stops under `prefers-reduced-motion`.
-
-## 2. Colour
+## Colour
 
 Tokens are RGB channels on `:root` in `index.css` (for example `--canvas: 247 246 244;`). Tailwind exposes them as `rgb(var(--x) / <alpha-value>)`, so opacity modifiers like `bg-accent/35` work. Use the token classes, never raw hex values.
 
@@ -53,7 +43,7 @@ Tokens are RGB channels on `:root` in `index.css` (for example `--canvas: 247 24
 
 `accent` itself is too light for text (3.7:1). Use `accent-strong` for any accent-coloured text or filled button.
 
-## 3. Typography
+## Typography
 
 Geist 400/500/600 and Geist Mono 400/500, loaded from Google Fonts with preconnected `<link>` tags in `index.html`. The root font size is 14px.
 
@@ -76,7 +66,7 @@ Geist 400/500/600 and Geist Mono 400/500, loaded from Google Fonts with preconne
 - **Measure.** Reading text is capped at `max-w-measure` (40em, about 85 characters). Use `em`, not `ch`, because Geist's zero is wide.
 - **Links in running text** use `linkUnderline` or `linkHoverUnderline` from `ui/linkClass.ts`: a 1px rule 0.22em below the baseline.
 
-## 4. Spacing, shape, depth and motion
+## Spacing, shape, depth and motion
 
 **Spacing.** `theme.spacing` is redefined in pixels on a 4px grid with 2px half-steps: `p-4` is 16px, `p-0.5` is 2px, `p-2.5` is 10px. Tailwind's default rem steps would land on fractions (10.5px, 17.5px) with the 14px root. Use 1–3px values only for hairline offsets and optical nudges.
 
@@ -105,7 +95,7 @@ Geist 400/500/600 and Geist Mono 400/500, loaded from Google Fonts with preconne
 
 **Nav height.** `--nav-h: 56px`, available as the spacing value `nav` (`h-nav`, `top-nav`, `pt-nav`). `html` has `scroll-padding-top` of the nav height plus 16px, so focused elements scrolled into view stop below the nav.
 
-## 5. Icons
+## Icons
 
 - **Beside text,** use the cropped icons exported from `ui/icons.tsx`, for example `<CalendarIcon size={12} />`. Each is a MUI icon cropped to its visible ink, so gaps and padding measure from the shape you see. `size` is the ink height. Add new icons there with `cropped()` and the glyph's ink box from its path data.
 - **Alone** (icon buttons, avatars), plain MUI icons are fine.
@@ -117,7 +107,7 @@ Geist 400/500/600 and Geist Mono 400/500, loaded from Google Fonts with preconne
 - **Size:** glyph icons are about 1.3× the cap height, so wide glyphs (book, mail, school) come out shorter. Arrows, chevrons and plus signs are about 1× the cap height.
 - **Padding on the icon side** of a chip or button is about 0.85× the text side: `ps-[11px]` on small buttons and nav pills, `ps-[14px]` on medium buttons, `ps-[7px]` on badges.
 
-## 6. Components
+## Components
 
 Every component takes `className`, merged with `cx()` from `ui/cx.ts`, which joins truthy strings.
 
@@ -147,7 +137,7 @@ Every component takes `className`, merged with `cx()` from `ui/cx.ts`, which joi
 - `useBookmark(opportunityId)` in `lib/`: saved state for a listing, shared by cards and the opportunity page. A failed save rolls back.
 - `useEffectiveSession()` in `lib/`: the signed-in session, or the mock session in mock mode.
 
-## 7. Layout and pages
+## Layout and pages
 
 **App shell.** Signed-out visitors see the sign-in page at any URL. Signed-in pages share `MainLayout`: a fixed nav, the page, then a footer (hidden on search).
 
@@ -192,21 +182,7 @@ Every component takes `className`, merged with `cx()` from `ui/cx.ts`, which joi
 
 **404.** An `EmptyState` with a "Back to search" button.
 
-## 8. Writing
-
-- **Characters:** curly apostrophes and quotes (’ “ ”), a single-character ellipsis (…), and "and" rather than "&" except in names.
-- **Headings:** one h1 per page.
-
-## 9. Working on the frontend
-
-**Mock mode.** To work without the API or sign-in, create `apps/web/.env.local` with:
-
-```sh
-VITE_DEV_BYPASS_AUTH=true
-VITE_DEV_MOCK_ROLE=student   # or professor
-```
-
-The app then uses a mock session and mock listings from `src/data/devMock*.ts`. Mock mode only exists under `npm run dev`. It's stripped from production builds.
+## Working on the frontend
 
 **Adding a colour:**
 1. Add the RGB channels to `:root` in `index.css`.
@@ -216,34 +192,3 @@ The app then uses a mock session and mock listings from `src/data/devMock*.ts`. 
 **Adding a shared component:** put it in `components/ui/`, accept `className` and merge it with `cx()`, and add it to §6. Build from tokens, not raw values.
 
 **Before opening a PR:** run `npm run build` and `npm run lint`. Check the change in mock mode as both a student and a professor, at phone and desktop widths, and using only the keyboard.
-
-## 10. Decision log
-
-Newest first. Each entry says what was decided, why, and what it replaced.
-
-| Date | Decision | Why |
-|---|---|---|
-| 2026-10 | **Storybook removed.** | It was never maintained and its build was broken. Nothing depended on it. |
-| 2026-10-01 | **Text controls don't scale when pressed;** they darken instead. | Scaling moved labels by up to 0.6px at fractional display scales. |
-| 2026-10-01 | **Icons beside text are cropped to their ink.** | MUI icons have uneven blank margins, so spacing around their 24px box looked uneven. |
-| 2026-10-01 | **Spacing and radii in whole pixels**, replacing Tailwind's rem steps. | With a 14px root, rem steps produced fractional pixels across about 640 values. |
-| 2026-10-01 | **Typography scale with whole-pixel sizes** (§3), replacing the first draft's type table. | Every size and line height lands on a whole pixel, and tracking follows Geist's own scale. |
-| 2026-10-01 | **The opportunity page shows each fact once.** The facts line above the title and the separate Contacts section were removed. | They repeated the Details table and the contact card. |
-| 2026-10-01 | **The nav no longer hides on scroll**, and the search header scrolls with the results instead of floating over them. | _Reason not recorded._ |
-| 2026-10-01 | **No listing editing.** | `PATCH /opportunities/:id` only writes fields the listings don't use. Revisit when the API supports it. |
-| 2026-10-01 | **Professor bio and photo are read-only.** | The API has no professor save endpoint. |
-| 2026-10-01 | **Steel-blue accent**, replacing the near-black gradient pill. | Changed after the first build. _Reason not recorded._ |
-| 2026-09-30 | **`ink-muted` is `#6B6B73`**, not `#71717A`. | `#71717A` measured 4.48:1 on `canvas`, just under AA. |
-| 2026-09-30 | **Links and buttons are separate components** (`ButtonLink`, `Button`), and cards use a stretched link. | Buttons nested inside links are invalid HTML and confuse screen readers. |
-| 2026-09-30 | **`/` (search) is the home page;** the old `/main` landing page was retired. | _Reason not recorded._ The old page is kept as `deprecatedMainPage.tsx` and is unstyled. |
-| 2026-09-30 | **Geist and Geist Mono**, replacing Inter, Roboto and Jersey 25. | The design pairs a sans for content with a mono for data, and Geist ships both. |
-| 2026-09-30 | **Keep the top nav**; no sidebar shell. | The redesign restyled the app without changing its structure or routes. |
-
-## 11. Known gaps
-
-- **Dark mode:** none. The tokens are set up so a dark theme could redefine them in one place.
-- **Year sort:** the control is shown but doesn't sort yet.
-- **Warning tokens:** `warning` / `warning-bg` exist but nothing uses them.
-- **API addresses:** `lib/opportunities.ts`, `lib/professors.ts` and `lib/authClient.ts` hardcode `localhost`. They need to go through `/api` or configuration before deployment.
-- **`deprecatedMainPage.tsx`:** kept for reference, unrouted and unstyled.
-- **Favicon:** still Vite's default `vite.svg`.
