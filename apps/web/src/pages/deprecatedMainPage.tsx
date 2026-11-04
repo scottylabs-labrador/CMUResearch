@@ -1,3 +1,5 @@
+// This page is currently not being used, but was the old home page; Now replaced by the search page
+
 import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ResearchType, ProfessorType } from "../DataTypes";

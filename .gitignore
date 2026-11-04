@@ -25,8 +25,6 @@ dist-ssr
 .env
 apps/api/config.env
 
-*storybook.log
-storybook-static
 .claude/settings.local.json
 
 # Agent skills (installed by `npx skills add` — machine-local, do not commit)

@@ -9,6 +9,7 @@ Webapp which consolidates research opportunities across every Carnegie Mellon de
 | `apps/web` | React, TypeScript, Tailwind and Vite frontend |
 | `apps/api` | Express, auth, MongoDB routes, and `dbschemas/` |
 | `apps/scrapers` | Python collectors, CSV transforms, and database writers |
+| `docs` | Project documentation, including the [frontend design guide](docs/frontend-design.md) |
 
 Web and API use npm workspaces with one root `package-lock.json`. Python uses a separate virtual environment. No task runner or CI service is required.
 
@@ -45,12 +46,9 @@ Other root commands:
 npm run build           # output: apps/web/dist
 npm run preview
 npm run lint
-npm run test_server     # JSON fixture server on port 8000
 ```
 
 See [scraper setup and writer commands](apps/scrapers/README.md). Scrapers do not run during npm installation, frontend builds, or API startup.
-
-Known inherited tooling issues: Storybook's `src/pages/Profile.stories.tsx` imports a removed `./Profile` module, so `build-storybook` currently fails. ESLint's existing Storybook rules have no TypeScript parser and report parsing errors on TypeScript stories/configuration. These are not required merge checks; the production Vite build is independent of them.
 
 ## PostgreSQL development tooling
 

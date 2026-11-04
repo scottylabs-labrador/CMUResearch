@@ -12,9 +12,6 @@
     "build": "npm run build --workspace @researchstarter/web --",
     "lint": "npm run lint --workspace @researchstarter/web --",
     "preview": "npm run preview --workspace @researchstarter/web --",
-    "test_server": "npm run test_server --workspace @researchstarter/web --",
-    "storybook": "npm run storybook --workspace @researchstarter/web --",
-    "build-storybook": "npm run build-storybook --workspace @researchstarter/web --",
     "server": "npm run start --workspace @researchstarter/api --",
     "db:check": "npm run db:check --workspace @researchstarter/api --",
     "db:migrate": "npm run db:migrate --workspace @researchstarter/api --"
